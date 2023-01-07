@@ -6,17 +6,18 @@ using namespace std;
 int Pre[MAX], In[MAX], Post[MAX];
 int N;
 int pos = 0;
+int idx = 0;
 
 void ReconstPost(int left, int right){
     if(left >= right) return ;
-    int root = Pre[++pos];
+    int root = Pre[pos++];
     int key;
-    for(int i = 0; i < N; ++i) {
+    for(int i = left; i < right; ++i) {
         if(root == In[i]) key = i;
     }
     ReconstPost(left, key);
     ReconstPost(key + 1, right);
-    Post[pos - 1] = root;
+    Post[idx++] = root;
 }
 
 void PrintPost() {
