@@ -1,0 +1,21 @@
+#!/bin/bash
+# - AIZU OFFLINE JUDGE -
+
+for PROGRAM in "$@"
+do
+    # REG="/\* Test case #[0-9]+ for problem $PROGRAM is not available\. \*/"
+    REG="/\* .* \*/"
+    mkdir -p $PROGRAM
+    cd $PROGRAM
+
+    i=1
+    id=01
+    while echo "Downloading $PROGRAM $id" && curl -o ${id}_input.txt https://judgedat.u-aizu.ac.jp/testcases/$PROGRAM/$i/in && ! [[ `cat ${id}_input.txt` =~ $REG ]];
+    do
+        curl -o ${id}_output.txt https://judgedat.u-aizu.ac.jp/testcases/$PROGRAM/$i/out
+        i=$((i+1))
+        id=`printf %02d $i`
+    done;
+    rm ${id}_input.txt
+    cd ..
+done
