@@ -1,0 +1,5 @@
+#!/bin/zsh
+for PREFIX in "$@"
+do
+    echo ${PREFIX}_input.txt ${PREFIX}_output.txt
+done

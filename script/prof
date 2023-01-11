@@ -1,0 +1,19 @@
+#!/bin/zsh
+SCRIPT_PATH="${0:A:h}"
+PROGRAM=$1
+SOURCE=$2
+TESTCASE=$3
+OPTIMIZATION=${3:--Og}
+TRACEFILE=${SCRIPT_PATH}/output/${PROGRAM}.trace
+TEMPLATE="Time Profiler"
+DSYMFILE=$PROGRAM.o.dSYM
+STDINFILE=${PROGRAM}/${TESTCASE}_input.txt
+STDOUTFILE=${SCRIPT_PATH}/output/${PROGRAM}.log
+
+mkdir -p ${SCRIPT_PATH}/output
+gcc-12 $SOURCE -o $PROGRAM.o -Wall -g $OPTIMIZATION
+rm -rf $STDOUTFILE
+xctrace record --append-run --time-limit 5s --output $TRACEFILE --template $TEMPLATE --target-stdout $STDOUTFILE --target-stdin $STDINFILE --launch ./$PROGRAM.o
+xctrace symbolicate --input $TRACEFILE --dsym $DSYMFILE
+
+${SCRIPT_PATH}/aoj $PROGRAM

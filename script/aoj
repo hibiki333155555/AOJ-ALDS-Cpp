@@ -1,0 +1,44 @@
+#!/bin/bash
+# - AIZU OFFLINE JUDGE -
+TIMEFORMAT='%3Us'
+
+EXITCODE=0
+PROGRAM=$1
+SOURCE=$2
+
+if gcc $SOURCE -o $PROGRAM.out -O3 -Wall -march=native -lm
+then
+    echo "Testing $PROGRAM"
+    for id in `ls $PROGRAM | sed -ne "s/^\(.*\)_input.txt$/\1/p"`;
+    do
+        PREFIX=${PROGRAM}/${id}
+
+        elapsed=$(cat ${PREFIX}_input.txt | { time { ./$PROGRAM.out >${PREFIX}_result.txt 2>${PREFIX}_error.txt ; }; } 2>&1)
+        status=$?
+        if ! [ $status -eq 0 ];
+        then
+            ERROR_LINE=$(printf '%q: line [0-9]*: ' $0 | sed -e 's/\./\\./g' -e 's/\//\\\//g' )
+            ERROR_CMD='\.\/$PROGRAM.o > ${PREFIX}_result.txt 2> ${PREFIX}_error\.txt'
+            printf "$elapsed" | sed -e "$ d;s/$ERROR_LINE//g"  -e "$ d;s/$ERROR_CMD//g" >> ${PREFIX}_error.txt
+            elapsed=$(printf "$elapsed" | tail -n 1)
+            diff ${PREFIX}_result.txt ${PREFIX}_output.txt > ${PREFIX}.diff
+            printf "${id}\t\e[1;31mRE\033[0m\t$elapsed\n"
+            printf "\e[0;31m"; cat ${PREFIX}_error.txt; printf "\033[0m"
+            EXITCODE=1
+        elif cmp --silent -- "${PREFIX}_result.txt" "${PREFIX}_output.txt";
+        then
+            printf "${id}\t\e[1;32mAC\033[0m\t$elapsed\n"
+            # remove result, error and diff file if they exist
+            rm ${PREFIX}_result.txt ${PREFIX}_error.txt ${PREFIX}.diff 2> /dev/null
+        else
+            # diff result file and output file and save it to diff file
+            diff ${PREFIX}_result.txt ${PREFIX}_output.txt > ${PREFIX}.diff
+            printf "${id}\t\e[1;31mWA\033[0m\t$elapsed\n"
+            # remove error file if it exists
+            rm ${PREFIX}_error.txt 2> /dev/null
+            EXITCODE=1
+        fi
+    done;
+fi
+
+exit $EXITCODE

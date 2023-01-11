@@ -1,0 +1,15 @@
+#!/bin/bash
+SCRIPT_PATH=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+PROGRAM=$1
+SOURCE=$2
+TESTCASE=$3
+OPTIMIZATION=${4:--O3}
+STDINFILE=${PROGRAM}/${TESTCASE}_input.txt
+STDOUTFILE=${SCRIPT_PATH}/output/${PROGRAM}.log
+
+mkdir -p ${SCRIPT_PATH}/output
+gcc $SOURCE -o $PROGRAM.out -Wall -g $OPTIMIZATION -lm
+rm -rf $STDOUTFILE
+sudo perf record -g --call-graph dwarf ./$PROGRAM.out < $STDINFILE > $STDOUTFILE
+sudo perf stat ./$PROGRAM.out < $STDINFILE > $STDOUTFILE
+# sudo perf report -i perf.data
