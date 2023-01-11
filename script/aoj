@@ -6,7 +6,7 @@ EXITCODE=0
 PROGRAM=$1
 SOURCE=$2
 
-if gcc $SOURCE -o $PROGRAM.out -O3 -Wall -march=native -lm
+if g++ $SOURCE -o $PROGRAM.out -O3 -Wall -lm
 then
     echo "Testing $PROGRAM"
     for id in `ls $PROGRAM | sed -ne "s/^\(.*\)_input.txt$/\1/p"`;
