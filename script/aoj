@@ -18,7 +18,7 @@ then
         if ! [ $status -eq 0 ];
         then
             ERROR_LINE=$(printf '%q: line [0-9]*: ' $0 | sed -e 's/\./\\./g' -e 's/\//\\\//g' )
-            ERROR_CMD='\.\/$PROGRAM.o > ${PREFIX}_result.txt 2> ${PREFIX}_error\.txt'
+            ERROR_CMD='\.\/$PROGRAM.out > ${PREFIX}_result.txt 2> ${PREFIX}_error\.txt'
             printf "$elapsed" | sed -e "$ d;s/$ERROR_LINE//g"  -e "$ d;s/$ERROR_CMD//g" >> ${PREFIX}_error.txt
             elapsed=$(printf "$elapsed" | tail -n 1)
             diff ${PREFIX}_result.txt ${PREFIX}_output.txt > ${PREFIX}.diff
