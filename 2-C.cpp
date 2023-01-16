@@ -52,10 +52,16 @@ int main() {
     bubble(C1, N);
     select(C2, N);
 
-    for(int i = 0; i < N; i++) cout << C1[i].suit << C1[i].value << " ";
+    for(int i = 0; i < N; i++) {
+        if(i) cout << " ";
+        cout << C1[i].suit << C1[i].value;
+    }
     cout << endl;
     cout << "Stable" << endl;
-    for(int i = 0; i < N; i++) cout << C2[i].suit << C2[i].value << " ";
+    for(int i = 0; i < N; i++) {
+        if(i) cout << " ";
+        cout << C2[i].suit << C2[i].value;
+    }
     cout << endl;
     if(isStable(C1, C2, N)) cout << "Stable" << endl;
     else cout << "Not stable" << endl;
