@@ -32,6 +32,7 @@ void PostOrder(int u) {
     cout << " " << u;
 }
 
+
 void PrintAll(int u) {
     cout << "Preorder" << endl;
     PreOrder(u);

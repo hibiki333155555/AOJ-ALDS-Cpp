@@ -19,6 +19,7 @@ int partition(int p, int r) {
     return i + 1;
 }
 
+
 int main() {
     int N;
     cin >> N;

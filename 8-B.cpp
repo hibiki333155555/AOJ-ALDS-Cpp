@@ -60,6 +60,7 @@ void preorder(Node *u){
     preorder(u->right);
 }
 
+
 int main(){
   string operation;
   int N;

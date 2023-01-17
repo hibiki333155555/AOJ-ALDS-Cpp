@@ -17,6 +17,7 @@ int bubble(int A[], int N) {
     return count;
 }
 
+
 int main() {
     int N, count;
     cin >> N;

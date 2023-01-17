@@ -29,6 +29,7 @@ void PrintPost() {
     cout << endl;
 }
 
+
 int main() {
     int k;
     cin >> N;

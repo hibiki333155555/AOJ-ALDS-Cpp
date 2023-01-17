@@ -56,7 +56,6 @@ int SetHeight(int u) {
     return H[u] = (hleft > hright ? hleft : hright);
 }
 
-
 int main() {
     int number, nchild, l, r, k, root;
     cin >> N;

@@ -10,6 +10,7 @@ void printarray(int A[], int n){
     cout << endl;
 }
 
+
 int main() {
     int n, i, j, key;
     int A[100];

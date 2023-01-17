@@ -9,6 +9,7 @@ int gcd(int x, int y) {
     }
     return x;
 }
+
 int main() {
     int x, y;
     cin >> x >> y;

@@ -6,6 +6,7 @@ using namespace std;
 int A[S];
 int B[S] = { 0 };
 
+
 void CountingSort(int N) {
     int C[K] = { 0 };
     for(int j = 0; j < N; ++j) ++C[A[j]];

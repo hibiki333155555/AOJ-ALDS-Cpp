@@ -21,6 +21,7 @@ int main() {
         if(i) cout << " ";
         cout << A[i];
     }
+    
     cout << endl;
     cout << count << endl;
     return 0;

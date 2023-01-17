@@ -1,5 +1,4 @@
 // 木構造の実装
-
 #include <iostream>
 using namespace std;
 #define MAX 100005

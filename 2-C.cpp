@@ -63,6 +63,7 @@ int main() {
         cout << C2[i].suit << C2[i].value;
     }
     cout << endl;
+    
     if(isStable(C1, C2, N)) cout << "Stable" << endl;
     else cout << "Not stable" << endl;
 
